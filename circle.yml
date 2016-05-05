@@ -14,6 +14,7 @@ machine:
 
 dependencies:
   pre:
+    - curl -v -O http://download.unity3d.com/download_unity/unity-editor-installer-5.1.0f3+2015091501.sh
     - sudo gem install fastlane --verbose
     - sudo gem update match
     - sudo gem cleanup
