@@ -1,0 +1,41 @@
+general:
+  # if the application is *not* in the root of the repo but
+  # in the sub-directory called "ios-app"#
+  # build_dir: ios-app #
+
+machine:
+  xcode:
+    version: "7.2"
+  environment:
+    # please specify your code signing identity name here
+    GYM_CODE_SIGNING_IDENTITY: "iPhone Distribution"
+    MATCH_PASSWORD: "Apple@develop123"
+    #CODE_SIGN_IDENTITY = "iPhone Distribution";
+
+dependencies:
+  pre:
+    - sudo gem install fastlane --verbose
+    - sudo gem update match
+    - sudo gem cleanup
+    - fastlane-credentials add --username glancingrelic@gmail.com --password Apple@develop123
+    #- cert -u glancingrelic@gmail.com#
+    #- echo https://github.com/fouadbakour/mytestrepo | match init
+    #- echo Apple@develop123 | match appstore --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --git_url https://github.com/fouadbakour/mytestrepo
+    - produce --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --app_name Eurisko App --app_version 1.0 --sku sku1234testapp --language English --company_name Eurisko Mobility
+    - match appstore --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --git_url git+ssh://github.com/fouadbakour/mytestrepo
+    - snapshot init
+    
+deployment:
+  staging:
+    branch: master
+    commands:
+      #- cert -u glancingrelic@gmail.com
+      #- produce --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --app_name Eurisko App --app_version 1.0 --sku sku1234testapp --language English --company_name Eurisko Mobility
+      #- sigh -a com.eurisko.testapp  -u glancingrelic@gmail.com
+      - gym --project "testapp.xcodeproj" --scheme "testappNewScheme" --clean
+      - deliver init --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp
+      #- deliver generate_summary --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp
+      - snapshot --devices 'iPhone 5' --project "testapp.xcodeproj"
+      #- snapshot --stop_after_first_error --skip_open_summary
+      #- gym --project "testapp.xcodeproj" --scheme "testappNewScheme" --clean
+      #- deliver --ipa "testapp.ipa" --submit_for_review --username glancingrelic@gmail.com --force
