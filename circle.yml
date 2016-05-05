@@ -24,7 +24,6 @@ dependencies:
     #- echo Apple@develop123 | match appstore --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --git_url https://github.com/fouadbakour/mytestrepo
     - produce --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --app_name Eurisko App --app_version 1.0 --sku sku1234testapp --language English --company_name Eurisko Mobility
     - match appstore --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --git_url git+ssh://github.com/fouadbakour/mytestrepo
-    - snapshot init
     
 deployment:
   staging:
@@ -34,9 +33,10 @@ deployment:
       #- produce --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --app_name Eurisko App --app_version 1.0 --sku sku1234testapp --language English --company_name Eurisko Mobility
       #- sigh -a com.eurisko.testapp  -u glancingrelic@gmail.com
       - gym --project "testapp.xcodeproj" --scheme "testappNewScheme" --clean
-      - deliver init --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp
+      - snapshot --devices 'iPhone 5, iPhone 4s, iPhone 6, iPhone 6 Plus' --project "testapp.xcodeproj"
+      #- deliver init --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp
       #- deliver generate_summary --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp
-      - snapshot --devices 'iPhone 5' --project "testapp.xcodeproj"
       #- snapshot --stop_after_first_error --skip_open_summary
       #- gym --project "testapp.xcodeproj" --scheme "testappNewScheme" --clean
-      #- deliver --ipa "testapp.ipa" --submit_for_review --username glancingrelic@gmail.com --force
+      - deliver submit_build --build_number 1 --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --force
+      #- deliver --ipa "testapp.ipa" --submit_for_review --username glancingrelic@gmail.com --force --app_identifier com.eurisko.testapp
