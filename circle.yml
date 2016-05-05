@@ -9,7 +9,6 @@ machine:
   environment:
     # please specify your code signing identity name here
     GYM_CODE_SIGNING_IDENTITY: "iPhone Distribution"
-    MATCH_PASSWORD: "Apple@develop123"
     #CODE_SIGN_IDENTITY = "iPhone Distribution";
 
 dependencies:
@@ -18,13 +17,7 @@ dependencies:
     - sudo gem install fastlane --verbose
     - sudo gem update match
     - sudo gem cleanup
-    - fastlane-credentials add --username glancingrelic@gmail.com --password Apple@develop123
-    #- cert -u glancingrelic@gmail.com#
-    #- echo https://github.com/fouadbakour/mytestrepo | match init
-    #- echo Apple@develop123 | match appstore --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --git_url https://github.com/fouadbakour/mytestrepo
-    - produce --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --app_name Eurisko App --app_version 1.0 --sku sku1234testapp --language English --company_name Eurisko Mobility
-    - match appstore --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --git_url git+ssh://github.com/fouadbakour/mytestrepo
-    
+
 deployment:
   staging:
     branch: master
@@ -32,11 +25,8 @@ deployment:
       #- cert -u glancingrelic@gmail.com
       #- produce --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --app_name Eurisko App --app_version 1.0 --sku sku1234testapp --language English --company_name Eurisko Mobility
       #- sigh -a com.eurisko.testapp  -u glancingrelic@gmail.com
-      - gym --project "testapp.xcodeproj" --scheme "testappNewScheme" --clean
-      - snapshot --devices 'iPhone 5, iPhone 4s, iPhone 6, iPhone 6 Plus' --project "testapp.xcodeproj"
       #- deliver init --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp
       #- deliver generate_summary --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp
       #- snapshot --stop_after_first_error --skip_open_summary
       #- gym --project "testapp.xcodeproj" --scheme "testappNewScheme" --clean
-      - deliver submit_build --build_number 1 --username glancingrelic@gmail.com --app_identifier com.eurisko.testapp --force
       #- deliver --ipa "testapp.ipa" --submit_for_review --username glancingrelic@gmail.com --force --app_identifier com.eurisko.testapp
